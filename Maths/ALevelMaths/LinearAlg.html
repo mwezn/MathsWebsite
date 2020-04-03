@@ -1,0 +1,103 @@
+##This website is thanks to the useful blog at : https://stackoverflow.com/questions/52675257/how-to-send-data-from-html-to-node-js
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta charset="utf-8">
+  <title>math.js | pretty printing with MathJax</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/mathjs@6.2.3/dist/math.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js"></script>
+
+</head>
+<style>
+
+  h1 {
+     font-family:Monospace;
+  }
+
+
+</style>
+<body>
+
+<h1>
+  Expression evaluation with math.js, pretty printing with MathJax
+</h1>
+<div class='GCSE'>GCSE Topics</div>
+<div class='GCSE'> Foundation</div>
+
+<div class='blue-background'> 
+<h1>Linear Algebra</h1>
+</div>
+
+
+
+
+
+
+<table>
+  <tr>
+    <th>Pretty print</th>
+    <td><div id="pretty"></div></td>
+  </tr>
+  <tr>
+    <th>Result</th>
+    <td><div name="result" id="result"></div></td>
+  </tr>
+</table>
+
+
+
+<form action="http://localhost:8080/example" method="POST">
+<div class='silver-background' > 
+Q1: Find the determinant of the following matrix:
+<div id="question" ></div> 
+  <input type="text" name="fname" id="answer" placeholder="determinant"><br>
+  <input type="hidden" name="Result" id ="resu" value=''/>
+ <button type="submit">Send to backend</button>
+</div>
+</form>
+
+
+
+
+
+
+
+
+
+<script>
+
+  scope = {
+     x:10
+  }
+  var a=Math.floor(Math.random()*10);
+  var b= Math.floor(Math.random()*10);
+  var c=Math.floor(Math.random()*10);
+  var d=Math.floor(Math.random()*10);
+  const expr= `det([[${a}, ${b}], [${c}, ${d}]])`;
+ 
+  const pretty = document.getElementById('pretty');
+  const result = document.getElementById('result');
+  let parenthesis = 'keep';
+  let implicit = 'hide';
+  console.log(math.parse(expr));
+  pretty.innerHTML='$$' + math.parse(expr).toTex({parenthesis: parenthesis}) + '$$';
+  const q=document.getElementById('question');
+  q.innerHTML='$$' + math.parse(expr).toTex({parenthesis: parenthesis}) +'$$';
+  result.innerHTML=math.format(math.evaluate(expr));
+
+  $(document).ready(function () { 
+    $('input[name="Result"]').val(result.innerHTML);
+  });
+
+
+ 
+</script>
+
+ 
+
+</body>

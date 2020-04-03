@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+<meta charset="utf-8">
+<title>Chalkboard.com</title>
+ <script src="algebraQs.js"></script>
+ <script src="https://unpkg.com/mathjs@6.2.3/dist/math.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+</head>
+   <body>
+      <h1>Expression evaluation with math.js, pretty printing with MathJax: A project by Mike Nelson</h1>
+      <div class='blue-background'> 
+      <h1>Algebra</h1>
+      <div class='GCSE'><a href="index.html">Home</a></div>
+      </div>
+      <div class='GCSE'>Factorising</div>
+      <div class='GCSE'><a href='#changeSub'>Change of subject</a></div>
+      <div class='GCSE'>Travel Graphs</div>
+      <div class='GCSE'>Algebraic Fractions</div>
+      <div class='GCSE'><a href='#y=mx'>Equation of a Straight Line</a></div>
+      <div class='GCSE'><a href='#simultaneous'>Simultaneous Equations</a></div>
+      <div class='GCSE'>Inequalities</div>
+      <div class='GCSE'>Indices</div>
+      <div class='GCSE'> <a href="quadraticqs.html">Quadratic Equations</a></div>
+      <div class='GCSE'>Functions</div>
+      
+<hr>
+
+<h1 id="changeSub">Change of subject</h1>
+<div id="d1">
+<button type="button" onclick="hideDef(this)">Show Definition</button>
+<p class="def">When changing the subject of a formula, we rearrange the formula so that we have a different letter in front of equals sign <br> 
+To do this, remember..change side, change operation <br> 
+Click "New Question" below to practice. Type your answer in Latex format </p>
+</div>
+
+      
+
+
+      <div id="q"></div>
+      <div id="e"></div>
+      <div id="d"></div>
+      
+      
+      <form>
+      <input type="button" id="NewQ" value="New Question" onclick="Question()"/>
+      </form>
+      
+      <button type="button" id="B1" onclick="hideShow(this)">Show Answer</button>
+      <div id="Hint"> </div>
+
+   <table>
+  <tr>
+    <th>Type your answer here:</th>
+    <td><input type="text" class="expr" id="expr"></td>
+  </tr>
+  <tr>
+    <th>Your answer</th>
+    <td><div id="pretty"></div></td>
+  </tr>
+  <tr>
+    <th>Result</th>
+    <td><div id="result"></div></td>
+  </tr>
+  </table>
+<div id="NEXT"></div>
+<div id="Score" class="blue-background"></div>
+<div id="clock"></div>
+</div>
+
+<h1 id='y=mx'>Equation of straight Lines</h1>
+<button type="button" onclick="hideDef(this)">Show Definition</button>
+<p class="def">You should be aware that the general equation of a straight line graph is defined as 
+\[ y=mx+C\]
+Where \( m \) is named the gradient (or slope) of the equation
+& \( C \)  is the "y-intercept" (this is where it cuts the y-axis). 
+\( m \) can be found by taking any 2 sets of point on the line & calculating the ratio in the difference between y & x coordinates in other words : 
+measuring its change in height vs its change in width
+
+\[ m = \frac{y_2-y_1}{x_2-x_1} \]
+
+You will often be asked to find the equation of a straight line either i) from a picture of its graph or ii) given 2 sets of points which lie on it
+Click here to practice some example </p>
+
+      <div id="q1"></div>
+      <div id="e1"></div>
+      <div id="d1"></div>
+  <form>
+      <input type="button" id="NewQ" value="New Question" onclick="StraightLine()"/>
+      </form>
+      
+      <button type="button" id="B1" onclick="hideShow(this)">Show Answer</button>
+      <div id="Hint1"> </div>
+
+   <table>
+  <tr>
+    <th>Gradient (m)</th>
+    <td><input type="text" class="expr"  id="expr1"></td>
+  </tr>
+  <tr>
+    <th>y-intercept (C)</th>
+    <td><input type="text" class="expr" id="expr1"></td>
+  </tr>
+  <tr>
+    <th>Your answer</th>
+    <td><div id="pretty1"></div></td>
+  </tr>
+  <tr>
+    <th>Result</th>
+    <td><div id="result1"></div></td>
+  </tr>
+  
+</table>
+
+<h1 id='simultaneous'> Simultaneous Equations </h1>
+<button id="simbutton" >Start</button>
+<div id="sim"></div>
+<div id="sim2"></div>
+
+<script>
+var TotalC =0;
+const expr = document.getElementById("expr");
+const pretty = document.getElementById('pretty')
+const result = document.getElementById('result')
+var score=document.getElementById('Score');
+var btn=document.createElement('BUTTON');
+var t=document.createTextNode('NEXT QUESTION?');
+btn.setAttribute("style","color:red;font-size:23px");
+
+function Question() {
+  
+  let parenthesis = 'keep';
+  var RealAnswer=AlgebraQ();
+  score.innerHTML=`you got ${TotalC} correct`;
+  expr.value='';
+  result.innerHTML=''
+  pretty.innerHTML=''
+  if (document.getElementById("changeSub").contains(btn)){
+    document.getElementById("changeSub").removeChild(btn);
+  }
+  expr.oninput= function () {
+    var YourAns='$$'+math.parse(expr.value).toTex({parenthesis: parenthesis}) + '$$';
+    pretty.innerHTML=YourAns;
+    MathJax.Hub.Queue(["Typeset",MathJax.Hub,"pretty"]);
+    
+    
+    if (expr.value==''){
+       result.innerHTML='';
+    }  
+    else if (expr.value!=RealAnswer[5]){
+       result.innerHTML="Keep Trying";
+    } 
+    else {
+       result.innerHTML="Correct!!";
+       result.style.backgroundColor = "lightblue";
+       TotalC+=1;
+       btn.appendChild(t);
+       document.getElementById("changeSub").appendChild(btn);
+       btn.addEventListener('click', Question);
+    }  
+    
+}
+};
+
+function inputOnNode(props){
+    console.log(props.value);
+}
+
+var x= document.getElementsByClassName("expr");
+for (var i=0; i<x.length; i ++){
+    x[i].addEventListener("input", inputOnNode(this));
+}
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+</body>
+</html>

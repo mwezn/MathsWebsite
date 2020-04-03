@@ -1,0 +1,93 @@
+body {
+  background: white
+}
+    html,
+    table td,
+    table th,
+    input[type=text] {
+      font-size: 11pt;
+      font-family: verdana, arial, sans-serif;
+      
+    }
+    .def{
+        display:none;
+        
+    }
+
+    p{
+        font-family:'monospace';
+
+    }
+   .silver-background {
+      background-color: silver;
+      transition-property: background-color;
+      transition-duration: 1s;
+      transition-timing-function: linear;
+    }
+ 
+   .silver-background:hover {
+       background-color: green;
+     }
+   .Quote {
+       font-size:8pt;
+       transition: font-size 1s ease;
+     }
+    .Quote:hover{
+       font-size:20pt;
+     }
+    
+    #Hint{
+       display:none;
+     }
+    #Hint1{
+        display:none;
+     }
+    .Button {
+        background-color:orange;
+     }
+    #e{
+       padding-left:250px;
+       padding-top:20px;
+    }
+ 
+      
+   
+   .blue-background{
+      background-color: lightblue;
+    }
+
+    h1 {
+      font-size: 11pt;
+      font-family:Monospace;
+      color: rgb(78, 128, 153)
+    }
+    
+    .GCSE{
+        font-size:15pt;
+        font-family:Monospace;
+    }
+    .Higher{
+        position:absolute;
+        font-size:15pt;
+        right: 150px;
+    }
+
+    input[type=text] {
+      padding: 5px;
+      width: 400px;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    table td,
+    table th {
+      padding: 5px;
+      border: 1px solid lightgray;
+    }
+
+    table th {
+      background-color: lightgray;
+    }
+   

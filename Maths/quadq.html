@@ -1,0 +1,125 @@
+##This website is thanks to the useful blog at : https://stackoverflow.com/questions/52675257/how-to-send-data-from-html-to-node-js
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+  <meta charset="utf-8">
+  <title>math.js | pretty printing with MathJax</title>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js"></script>
+  <script src="https://unpkg.com/mathjs@6.2.3/dist/math.js"></script>
+
+</head>
+<body>
+
+<h1>
+  Expression evaluation with math.js, pretty printing with MathJax
+</h1>
+<div class='GCSE'>GCSE Topics</div>
+<div class='GCSE'> Foundation</div>
+
+<div class='blue-background'> 
+<h1>Quadratic Equations</h1>
+</div>
+
+
+
+
+
+
+<table>
+  <tr>
+    <th>Find the two  roots of the equation: <br>(Round your answer to 2 d.p)</br></th>
+    <td><div id="pretty"></div></td>
+  </tr>
+  <tr>
+    <th id="greentick1">Root 1:</th>
+    <td><input type="text" id="root1"/></td>
+  </tr>
+  <tr>
+    <th id="greentick2">Root 2:</th>
+    <td><input type="text" id="root2"/></td>
+  </tr>
+  <tr>
+    <th>Result</th>
+    <td><div id="result"></div></td>
+  </tr>
+</table>
+
+
+
+<script>
+var btn=document.createElement('BUTTON');
+var t=document.createTextNode('NEXT QUESTION?');
+btn.setAttribute("style","color:red;font-size:23px");
+var yourans1=document.getElementById('root1');
+var yourans2=document.getElementById('root2');
+var changetick=document.getElementById('greentick1');
+var changetick2=document.getElementById('greentick2');
+function coefficients(){
+    var a=Math.floor(Math.random()*10);
+    var b=Math.floor(Math.random()*10);
+    var c=Math.floor(Math.random()*10);
+    if (b**2-4*a*c>=0){
+       if (a!=0){
+         return [a,b,c];
+         }
+    }
+    else{
+       return coefficients();
+    }
+  }
+  var values=coefficients();
+  var a=values[0];
+  var b=values[1];
+  var c=values[2];
+  var discriminant=math.sqrt(b**2-4*a*c);
+  var expr=(a==1 && c==0)?( `x^2+${b}x`):(a==1)?(`x^2+${b}x+${c}`):(c==0)?(`${a}x^2+${b}x`):(b==0)?(`${a}x^2+${c}`):(`${a}x^2+${b}x+${c}`);
+  
+  var first=b/(2*a);
+  var ans=math.divide(discriminant,2*a);
+  var root1= math.add(-first,ans);
+  var root2=math.subtract(-first,ans);
+  const pretty = document.getElementById('pretty');
+  const result = document.getElementById('result');
+  let parenthesis = 'keep';
+  let implicit = 'hide';
+  console.log(math.parse(expr));
+  pretty.innerHTML='$$' + math.parse(expr).toTex({parenthesis: parenthesis}) +'=0'+ '$$';
+  result.innerHTML=[root1,root2];
+  console.log([root1,root2]);
+  var ROOT1=root1.toFixed(2);
+  var ROOT2=root2.toFixed(2);
+  
+  yourans1.oninput=function(){
+      if (yourans1.value== ROOT1 || yourans1.value==ROOT2){
+         changetick.innerHTML+="&#9989";
+      }
+ }
+  yourans2.oninput=function(){
+      if(yourans2.value==ROOT1 || yourans2.value==ROOT2){
+         changetick2.innerHTML+="&#9989";
+      }
+  }
+ 
+         
+      
+
+
+
+   
+
+</script>
+
+
+<p class> Quadratic Equations are solved by any one or more of the following methods: i) Factorising, ii) Completing the square or iii) the Quadratic formulae. Here the formula 
+is given as \[x={-b \pm \sqrt{b^2-4ac}\over 2a}.\]</p>
+
+
+ 
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css">
+<meta charset="utf-8">
+</head>
+<body>
+<!-- Display the countdown timer in an element -->
+<p id="demo"></p>
+<button onclick="quesT()">StartQuiz</button>
+<p id="question"></p>
+<input type="text" id="IN"></input>
+<div id="ifright">
+<button id="nextq">Next Question?</button>
+</div>
+
+
+
+<script>
+  var NXT=document.getElementById("nextq");
+  NXT.addEventListener('click', quesT);
+  NXT.addEventListener('keydown', quesT);
+  
+  function countDown()
+  {
+    this.countDownTime = new Date().getTime()+10000;
+    
+    this.x = setInterval(function() {
+    this.now=new Date().getTime();
+    this.distance = this.countDownTime - this.now;
+    var days = Math.floor(this.distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((this.distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((this.distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((this.distance % (1000 * 60)) / 1000);
+    document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
+    if(distance <0){
+      clearInterval(x);
+      document.getElementById("demo").innerHTML="EXPIRED";
+    }
+},1000)};
+
+
+
+var next=document.getElementById("ifright");
+  function quesT(){
+    countDown();
+    if (next.style.display='block'){
+        next.style.display='none'
+    }
+ 
+    var a =Math.floor(Math.random()*10);
+    var b=Math.floor(Math.random()*10);
+    
+  
+ 
+    document.getElementById('question').innerHTML=`what is ${a}*${b}?`;
+    var val=document.getElementById("IN");
+    
+    val.oninput=function(){
+      if (val.value==a*b){
+        next.style.display='block';
+       
+         
+        console.log("CORRECT");
+    
+        
+      }
+      else{
+        console.log("NOPE");
+      }
+    }
+   
+}
+
+
+
+ 
+
+
+  
+  
+</script>
+</body>
+</html>

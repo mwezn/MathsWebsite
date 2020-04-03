@@ -1,0 +1,119 @@
+##This website is thanks to the useful blog at : https://stackoverflow.com/questions/52675257/how-to-send-data-from-html-to-node-js
+\\`${a}+${b}i`;
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+  <meta charset="utf-8">
+  <title>math.js | pretty printing with MathJax</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/mathjs@6.2.3/dist/math.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js"></script>
+
+</head>
+<body>
+
+<h1>
+  Expression evaluation with math.js, pretty printing with MathJax
+</h1>
+<div class='GCSE'>GCSE Topics</div>
+<div class='GCSE'> Foundation</div>
+
+<div class='blue-background'> 
+<h1>ComplexNumbers</h1>
+</div>
+
+
+
+
+
+
+<table>
+  <tr>
+    <th>Pretty print</th>
+    <td><div id="pretty"></div></td>
+  </tr>
+  <tr>
+    <th>Result</th>
+    <td><div name="result" id="result"></div></td>
+  </tr>
+</table>
+
+
+
+<form action="http://localhost:8080/example" method="POST">
+<div class='silver-background' > 
+Q1: Find real numbers a & b such that:
+<div id="question" ></div> 
+  <input type="text" name="fname" id="answer" placeholder="determinant"><br>
+  <input type="hidden" name="Result" id ="resu" value=''/>
+ <button type="submit">Send to backend</button>
+</div>
+</form>
+
+<button type="button" id="B1" onclick="hideShow()">Show Hint</button>
+<div id="Hint">
+Here'sthe solution:
+ \[(a+bi)^2=a^2+2abi-b^2\]
+& now comparing the real & imaginary parts gives:
+<div id="sol"></div>
+<div id="sol2"></div>
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+  function hideShow(){
+    x=document.getElementById("Hint");
+    var y=document.getElementById("B1");
+    if (x.style.display==='none'){
+       x.style.display='block';
+       y.innerHTML="Hide Hint";
+    } else {
+       x.style.display='none';
+       y.innerHTML="Show Hint";
+       
+    }
+  }
+
+
+
+
+  var a=Math.floor(Math.random()*10);
+  var b= Math.floor(Math.random()*10);
+  const expr=math.complex(a,b);
+  const rep=math.complex(a,b).toString();
+ 
+ 
+  const pretty = document.getElementById('pretty');
+  const result = document.getElementById('result');
+  let parenthesis = 'keep';
+  let implicit = 'hide';
+  console.log(math.parse(rep));
+  pretty.innerHTML='$$' + math.parse(rep).toTex({parenthesis: parenthesis}) + '$$';
+  const q=document.getElementById('question');
+  const s=document.getElementById('sol');
+  const i =document.getElementById('sol2');
+  q.innerHTML='$$' + '(a+bi)^2='+math.parse(rep).toTex() +'$$';
+  s.innerHTML='$$' + '(a^2-b^2)='+math.parse(expr.re).toTex({parenthesis: parenthesis})+'$$';
+  i.innerHTML='$$'+'2ab='+math.parse(expr.im).toTex()+'$$';
+
+  $(document).ready(function () { 
+    $('input[name="Result"]').val(result.innerHTML);
+  });
+
+
+ 
+</script>
+
+ 
+
+</body>

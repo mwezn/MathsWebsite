@@ -1,0 +1,108 @@
+##This page is thanks to the useful blog at : https://stackoverflow.com/questions/52675257/how-to-send-data-from-html-to-node-js
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+  <meta charset="utf-8">
+  <title>math.js | pretty printing with MathJax</title>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js"></script>
+  <script src="https://unpkg.com/mathjs@6.2.3/dist/math.js"></script>
+
+</head>
+<body>
+
+<h1>
+  Expression evaluation with math.js, pretty printing with MathJax
+</h1>
+<div class='GCSE'>GCSE Topics</div>
+<div class='GCSE'> Foundation</div>
+
+<div class='blue-background'> 
+<h1>Quadratic Equations</h1>
+</div>
+
+
+
+
+
+
+<table>
+  <tr>
+    <th>Pretty print</th>
+    <td><div id="pretty"></div></td>
+  </tr>
+  <tr>
+    <th>Result</th>
+    <td><div name="result" id="result"></div></td>
+  </tr>
+</table>
+
+
+
+<form action="http://localhost:8080/example" method="POST">
+<div class='silver-background' > 
+<p>Q1: Find the two roots of the equation:</p>
+<div id="question" ></div> 
+  <input type="text" name="fname" id="answer" placeholder="root1"><br>
+  <input type="text" name="fname" id="answer" placeholder="root2"><br>
+  <input type="hidden" name="Result" id ="resu" value=''/>
+ <button type="submit">Send to backend</button>
+</div>
+</form>
+
+<script>
+function coefficients(){
+    var a=Math.floor(Math.random()*10);
+    var b=Math.floor(Math.random()*10);
+    var c=Math.floor(Math.random()*10);
+    if (b**2-4*a*c>=0){
+       if (a!=0){
+         return [a,b,c];
+         }
+    }
+    else{
+       return coefficients();
+    }
+  }
+  var values=coefficients();
+  var a=values[0];
+  var b=values[1];
+  var c=values[2];
+  var discriminant=math.sqrt(b**2-4*a*c);
+  var expr=(a==1 && c==0)?( `x^2+${b}x`):(a==1)?(`x^2+${b}x+${c}`):(c==0)?(`${a}x^2+${b}x`):(`${a}x^2+${b}x+${c}`);
+  
+  var first=b/(2*a);
+  var ans=math.divide(discriminant,2*a);
+  var root1= math.add(-first,ans);
+  var root2=math.subtract(-first,ans);
+  const pretty = document.getElementById('pretty');
+  const result = document.getElementById('result');
+  let parenthesis = 'keep';
+  let implicit = 'hide';
+  console.log(math.parse(expr));
+  pretty.innerHTML='$$' + math.parse(expr).toTex({parenthesis: parenthesis}) + '$$';
+  const q=document.getElementById('question');
+  q.innerHTML='$$' + math.parse(expr).toTex({parenthesis: parenthesis}) + '=0'+'$$';
+  result.innerHTML=[root1,root2];
+  console.log([root1,root2]);
+  $(document).ready(function () { 
+    $('input[name="Result"]').val(result.innerHTML);
+  });
+
+   
+
+</script>
+
+
+<h2> Quadratic Equations are solved by any one or more of the following methods: i) Factorising, ii) Completing the square or iii) the Quadratic formulae. Here the formula 
+is given as \[x={-b \pm \sqrt{b^2-4ac}\over 2a}.\]</h2>
+
+
+ 
+
+</body>
+</html>
