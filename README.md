@@ -17,3 +17,7 @@ from GCSE to Alevel.
 
 It was started in september 2019 the work is still in progress
 it needs so much more yet.
+
+Final note: It uses two open source Js libraries/CDNs for rendering maths on the webpage 
+1) chess.js
+2)MathJax
