@@ -1,5 +1,6 @@
 (function () {
   var script = document.createElement("script");
+  var expr1= document.getElementById("expr");
   script.type = "text/javascript";
   script.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js";  
 
@@ -16,12 +17,36 @@
 
 })();
 
+/* The following IIFE (Immediately invoked function expression) is necessary to access the DOM once the page has fully loaded
+This prevents getElementById returning "null" or "undefined" errors 
+also note how specific nodes have been given Global scope using the window prefix 
+This allows other factory functions to access these also */
+
+(function(window,document) {
+window.onload = init;
+    function init(){
+      window.TotalC =0;
+      window.expr = document.getElementById("expr");
+      window.pretty = document.getElementById('pretty')
+      window.result = document.getElementById('result')
+      window.score=document.getElementById('Score');
+      window.btn=document.createElement('BUTTON');
+      window.t=document.createTextNode('NEXT QUESTION?');
+      btn.setAttribute("style","color:red;font-size:23px");
+      console.log(expr);
+
+   }
+
+})(window,document);
 
 var imported = document.createElement('script');
 imported.src = 'https://unpkg.com/mathjs@6.2.3/dist/math.js';
 document.head.appendChild(imported);
 var letters=["x","y", "z", "t", "c"];
 var letters2=["a","m","s", "u", "v"];  
+
+
+
 
 
 function AlgebraQ() {
@@ -39,7 +64,7 @@ function AlgebraQ() {
   MathJax.Hub.Queue(["Typeset",MathJax.Hub,"Hint"]);
   ex.innerHTML=`<p>Make ${letter} the subject of:  ` +`\\(`+  math.parse(`${letter2}==${equation}`).toTex()+`\\) </p>`;
   MathJax.Hub.Queue(["Typeset",MathJax.Hub,"e"]);
-  return[a,b,c,letter,letter2,A];
+  return A;
 };
 
 
@@ -115,13 +140,22 @@ function hideShow(props){
     }
 };
 
-function q() {
-  
+function inputOnNode(props){
+    console.log(props.value);
+    document.getElementById("pretty1").innerHTML=props.value;
+};
+
+
+function Question() {
+  var Answer=AlgebraQ();
   let parenthesis = 'keep';
   score.innerHTML=`you got ${TotalC} correct`;
   expr.value='';
   result.innerHTML=''
   pretty.innerHTML=''
+  if (document.getElementById("changeSub").contains(btn)){
+    document.getElementById("changeSub").removeChild(btn);
+  }
   expr.oninput= function () {
     var YourAns='$$'+math.parse(expr.value).toTex({parenthesis: parenthesis}) + '$$';
     pretty.innerHTML=YourAns;
@@ -131,7 +165,7 @@ function q() {
     if (expr.value==''){
        result.innerHTML='';
     }  
-    else if (expr.value!=RealAnswer[5]){
+    else if (expr.value!=Answer){
        result.innerHTML="Keep Trying";
     } 
     else {
@@ -140,14 +174,12 @@ function q() {
        TotalC+=1;
        btn.appendChild(t);
        document.getElementById("changeSub").appendChild(btn);
-       btn.addEventListener('click', q);
+       btn.addEventListener('click', Question);
     }  
     
 }
 };
 
-      
-    
 
 
 
