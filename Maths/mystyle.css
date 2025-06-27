@@ -91,4 +91,14 @@ body {
     table th {
       background-color: lightgray;
     }
+
+
+    div.q1 {
+      background-image: url('../FP2JAN23.png');
+      background-size: 600px 400px;
+       width:600px;
+       height:200px;
+       border:1px solid black;
+    
+}
    
